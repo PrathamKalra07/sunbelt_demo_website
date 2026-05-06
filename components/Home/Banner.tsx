@@ -17,13 +17,13 @@ const Banner = () => {
         fill
         priority
         className="object-cover object-center"
-        style={{ opacity: 0.99, filter: "grayscale(100%)" }}
+        // style={{ opacity: 1 }}
       />
 
       {/* Dark gradient from left */}
       <div
         className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 100%)" }}
+        style={{ background: "linear-gradient(to right, rgba(0,0,0,0.75) 10%, rgba(0,0,0,0.0) 80%)" }}
       />
 
       {/* Content */}
