@@ -73,64 +73,25 @@ export const FindProperty_BANNERS = [
 ];
 
 export const EXPLORE_PROPERTIES = {
-  heading: "Explore Properties",
-  results: "1,248 Results",
-
-  sortOptions: ["Newest First", "Price Low to High", "Price High to Low"],
-
-  properties: [
-    {
-      id: 1,
-      tag: "FOR SALE",
-      image: "contact-property.svg",
-      price: "$1,250,000",
-      title: "Modern Family Home",
-      address: "123 Palm Drive, Miami, FL 33101",
-      beds: "4 Beds",
-      baths: "3 Baths",
-      area: "2,450 Sq Ft",
-    },
-    {
-      id: 2,
-      tag: "FOR RENT",
-      image: "/luxery-Apartment.svg",
-      price: "$3,200/month",
-      title: "Luxury Apartment",
-      address: "456 Ocean View, Miami, FL 33101",
-      beds: "2 Beds",
-      baths: "2 Baths",
-      area: "1,100 Sq Ft",
-    },
-    {
-      id: 3,
-      tag: "FOR SALE",
-      image: "/communcial-building.svg",
-      price: "$2,750,000",
-      title: "Commercial Building",
-      address: "789 Business Blvd, Miami, FL 33101",
-      beds: "6 Beds",
-      baths: "4 Baths",
-      area: "5,500 Sq Ft",
-    },
-    {
-      id: 4,
-      tag: "FOR RENT",
-      image: "/cozy-cottage.svg",
-      price: "$2,800/month",
-      title: "Cozy Cottage",
-      address: "321 Garden St, Miami, FL 33101",
-      beds: "3 Beds",
-      baths: "2 Baths",
-      area: "1,600 Sq Ft",
-    },
-  ],
-
+  heading: "Available Properties",
+  results: "Showing 8 of 12,000+ listings",
+  sortOptions: ["Newest First", "Price: Low to High", "Price: High to Low", "Most Popular"],
   filters: {
-    propertyTypes: ["Residential", "Commercial", "Land", "Apartment"],
-    bedrooms: ["Any", "1+", "2+", "3+", "4+"],
-    bathrooms: ["Any", "2+", "3+", "4+"],
-    propertyStatus: ["For Sale", "For Rent"],
+    propertyTypes: ["Residential", "Commercial", "Land"],
+    bedrooms: ["1 BHK", "2 BHK", "3 BHK", "4+ BHK"],
+    bathrooms: ["1", "2", "3", "4+"],
+    propertyStatus: ["Ready to Move", "Under Construction", "New Launch"],
   },
+  properties: [
+    { id: 1, title: "Skyline Residency", address: "Bandra West, Mumbai", price: "₹95,00,000", tag: "Featured",   beds: "3 BHK", baths: "3", area: "1,450 sqft", type: "Residential", status: "Ready to Move",       image: "/building.jpg" },
+    { id: 2, title: "Green Valley Villa",  address: "Koregaon Park, Pune",  price: "₹72,00,000", tag: "New",        beds: "4 BHK", baths: "4", area: "2,200 sqft", type: "Residential", status: "New Launch",           image: "/building.jpg" },
+    { id: 3, title: "Metro Business Hub",  address: "Connaught Place, Delhi", price: "₹1,50,00,000", tag: "Premium", beds: "—",     baths: "2", area: "3,100 sqft", type: "Commercial",  status: "Ready to Move",       image: "/building.jpg" },
+    { id: 4, title: "Sunrise Apartments",  address: "Vesu, Surat",           price: "₹45,00,000", tag: "Hot Deal", beds: "2 BHK", baths: "2", area: "980 sqft",  type: "Residential", status: "Under Construction",   image: "/building.jpg" },
+    { id: 5, title: "Tech Park Office",    address: "Whitefield, Bengaluru", price: "₹2,20,00,000", tag: "Premium", beds: "—",     baths: "4", area: "5,000 sqft", type: "Commercial",  status: "Ready to Move",       image: "/building.jpg" },
+    { id: 6, title: "Lake View Plots",     address: "Gachibowli, Hyderabad", price: "₹30,00,000", tag: "New",      beds: "—",     baths: "—", area: "2,400 sqft", type: "Land",        status: "New Launch",           image: "/building.jpg" },
+    { id: 7, title: "Palm Grove Homes",    address: "OMR, Chennai",          price: "₹61,00,000", tag: "Featured", beds: "3 BHK", baths: "3", area: "1,600 sqft", type: "Residential", status: "Ready to Move",       image: "/building.jpg" },
+    { id: 8, title: "City Centre Studio",  address: "Lower Parel, Mumbai",   price: "₹28,00,000", tag: "Hot Deal", beds: "1 BHK", baths: "1", area: "520 sqft",  type: "Residential", status: "Under Construction",   image: "/building.jpg" },
+  ],
 };
 
 export const INSIGHT_MARKET_DATA = {

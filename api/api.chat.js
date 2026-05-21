@@ -76,10 +76,8 @@ export const chatLease = async (content, conversationId) => {
     return response.json();
 }
 
-export const generateRetellToken = async () => {
-    try {
-        const response = await fetch(`${RETELL_WEBHOOK_URL}`)
-    } catch (e) {
-
-    }
-}
+export const fetchProperties = async () => {
+    const response = await authFetch(`${BASE_URL}/properties`);
+    if (!response.ok) throw new Error("Failed to fetch properties");
+    return response.json();
+};
