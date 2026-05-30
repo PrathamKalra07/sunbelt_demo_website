@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 import { EXPLORE_PROPERTIES } from "@/lib/contants";
 import { fetchProperties } from "@/api/api.chat";
+import PropertyChatbot from "./PropertyChatbot";
 
 export type BannerSearch = { location: string; type: string; budget: string; bedrooms: string };
 
@@ -187,13 +188,11 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
 
   return (
     <>
-      {/* Backdrop — clicking outside closes the modal */}
       <div
         className="fixed inset-0 z-40 flex items-center justify-center p-4"
         style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)", animation: "fadeIn 0.2s ease" }}
         onClick={onClose}
       >
-        {/* Modal */}
         <div
           className="relative bg-white flex flex-col overflow-hidden w-full"
           style={{
@@ -205,18 +204,9 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
           }}
           onClick={e => e.stopPropagation()}
         >
-          {/* Image slider */}
           <div className="relative flex-shrink-0 overflow-hidden" style={{ height: "240px" }}>
-            <Image
-              src={gallery[activeImg]}
-              alt={property.title}
-              fill
-              className="object-cover transition-opacity duration-300"
-              unoptimized
-            />
+            <Image src={gallery[activeImg]} alt={property.title} fill className="object-cover transition-opacity duration-300" unoptimized />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)" }} />
-
-            {/* Close button */}
             <button
               onClick={onClose}
               className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
@@ -226,38 +216,21 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
                 <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
               </svg>
             </button>
-
-            {/* Thumbnail strip */}
             <div className="absolute bottom-3 left-4 flex gap-2">
               {gallery.map((img, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveImg(i)}
-                  className="relative overflow-hidden rounded-md transition-all"
-                  style={{
-                    width: i === activeImg ? "52px" : "40px",
-                    height: "32px",
-                    border: i === activeImg ? "2px solid white" : "2px solid transparent",
-                    opacity: i === activeImg ? 1 : 0.6,
-                  }}
-                >
+                <button key={i} onClick={() => setActiveImg(i)} className="relative overflow-hidden rounded-md transition-all"
+                  style={{ width: i === activeImg ? "52px" : "40px", height: "32px", border: i === activeImg ? "2px solid white" : "2px solid transparent", opacity: i === activeImg ? 1 : 0.6 }}>
                   <Image src={img} alt="" fill className="object-cover" unoptimized />
                 </button>
               ))}
             </div>
-
-            {/* Property name overlay */}
             <div className="absolute bottom-3 right-4 text-right">
               <p className="text-white font-bold text-lg leading-tight">{property.title}</p>
-              <p className="text-white/70 text-xs flex items-center gap-1 justify-end">
-                <PinIcon />{property.address}
-              </p>
+              <p className="text-white/70 text-xs flex items-center gap-1 justify-end"><PinIcon />{property.address}</p>
             </div>
           </div>
 
-          {/* Scrollable body */}
           <div className="flex-1 overflow-y-auto">
-            {/* Meta row */}
             <div className="px-6 py-4 flex items-center gap-3 flex-wrap" style={{ borderBottom: "1px solid #F0F0F0" }}>
               {[
                 { label: "Type",        value: property.type },
@@ -278,21 +251,18 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
               )}
             </div>
 
-            {/* Description */}
             {property.description && (
               <div className="px-6 py-3" style={{ borderBottom: "1px solid #F0F0F0" }}>
                 <p className="text-xs text-black/50 leading-relaxed">{property.description}</p>
               </div>
             )}
 
-            {/* Units section */}
             <div className="px-6 py-4">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-bold text-black">Units & Availability</h3>
                 <span className="text-xs text-black/40">{units.length} total</span>
               </div>
 
-              {/* Status filter tabs */}
               <div className="flex gap-2 mb-4 flex-wrap">
                 {[
                   { key: "all",         label: "All" },
@@ -306,17 +276,9 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
                   const colors = key === "all" ? null : STATUS_COLORS[key];
                   const isActive = statusFilter === key;
                   return (
-                    <button
-                      key={key}
-                      onClick={() => setStatusFilter(key)}
+                    <button key={key} onClick={() => setStatusFilter(key)}
                       className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
-                      style={{
-                        border: "1px solid",
-                        borderColor: isActive ? "#000" : "#E5E5E5",
-                        background: isActive ? "#000" : "#fff",
-                        color: isActive ? "#fff" : "#555",
-                      }}
-                    >
+                      style={{ border: "1px solid", borderColor: isActive ? "#000" : "#E5E5E5", background: isActive ? "#000" : "#fff", color: isActive ? "#fff" : "#555" }}>
                       {colors && <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors.dot }} />}
                       {label} <span className="opacity-60">{count}</span>
                     </button>
@@ -324,7 +286,6 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
                 })}
               </div>
 
-              {/* Unit list */}
               {loadingUnits ? (
                 <div className="flex flex-col gap-2">
                   {[1, 2, 3].map(i => (
@@ -345,11 +306,8 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
                     const status = (unit.status ?? "available").toLowerCase();
                     const colors = STATUS_COLORS[status] ?? STATUS_COLORS.available;
                     return (
-                      <div
-                        key={unit.id}
-                        className="flex items-center justify-between px-4 py-3.5 rounded-xl"
-                        style={{ border: "1px solid #F0F0F0", background: "#FAFAFA" }}
-                      >
+                      <div key={unit.id} className="flex items-center justify-between px-4 py-3.5 rounded-xl"
+                        style={{ border: "1px solid #F0F0F0", background: "#FAFAFA" }}>
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#F0F0F0" }}>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.8">
@@ -359,19 +317,12 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
                           <div>
                             <p className="text-sm font-semibold text-black">Unit {unit.unit_number ?? unit.number ?? unit.name}</p>
                             <p className="text-xs text-black/40">
-                              {[
-                                unit.bedroom_count && `${unit.bedroom_count}-Bedroom`,
-                                unit.unit_type,
-                                unit.square_feet && `${unit.square_feet} sqft`,
-                              ].filter(Boolean).join(" · ")}
+                              {[unit.bedroom_count && `${unit.bedroom_count}-Bedroom`, unit.unit_type, unit.square_feet && `${unit.square_feet} sqft`].filter(Boolean).join(" · ")}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span
-                            className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
-                            style={{ background: colors.bg, color: colors.text }}
-                          >
+                          <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: colors.bg, color: colors.text }}>
                             {status.toUpperCase()}
                           </span>
                           {unit.monthly_rent && (
@@ -390,7 +341,6 @@ function PropertyDetailPanel({ property, onClose }: { property: any; onClose: ()
           </div>
         </div>
       </div>
-
       <style>{`
         @keyframes popIn  { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -420,30 +370,21 @@ const Pagination = ({ page, total, onChange }: { page: number; total: number; on
     <div className="flex items-center justify-center gap-1 mt-10">
       <button onClick={() => onChange(page - 1)} disabled={page === 1}
         className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors disabled:opacity-30"
-        style={{ border: "1px solid #E5E5E5" }}>
-        <ChevronLeft />
-      </button>
+        style={{ border: "1px solid #E5E5E5" }}><ChevronLeft /></button>
       {pages.map((p, i) =>
         p === "…" ? (
           <span key={`ellipsis-${i}`} className="w-8 h-8 flex items-center justify-center text-xs text-black/30">…</span>
         ) : (
           <button key={p} onClick={() => onChange(p as number)}
             className="w-8 h-8 rounded-lg text-xs font-medium transition-colors"
-            style={{
-              border: "1px solid",
-              borderColor: page === p ? "#000" : "#E5E5E5",
-              background: page === p ? "#000" : "#fff",
-              color: page === p ? "#fff" : "#000",
-            }}>
+            style={{ border: "1px solid", borderColor: page === p ? "#000" : "#E5E5E5", background: page === p ? "#000" : "#fff", color: page === p ? "#fff" : "#000" }}>
             {p}
           </button>
         )
       )}
       <button onClick={() => onChange(page + 1)} disabled={page === totalPages}
         className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors disabled:opacity-30"
-        style={{ border: "1px solid #E5E5E5" }}>
-        <ChevronRight />
-      </button>
+        style={{ border: "1px solid #E5E5E5" }}><ChevronRight /></button>
     </div>
   );
 };
@@ -530,12 +471,12 @@ const FilterSidebar = ({ data, activeFilters, setActiveFilters }: any) => {
 
 const FindPropertyPage = ({ bannerSearch }: { bannerSearch: BannerSearch | null }) => {
   const data = EXPLORE_PROPERTIES;
-  const [view, setView]                     = useState<"grid" | "list">("grid");
-  const [activeFilters, setActiveFilters]   = useState<Record<string, string[]>>({});
-  const [search, setSearch]                 = useState("");
-  const [properties, setProperties]         = useState<any[]>([]);
-  const [loading, setLoading]               = useState(true);
-  const [page, setPage]                     = useState(1);
+  const [view, setView]                         = useState<"grid" | "list">("grid");
+  const [activeFilters, setActiveFilters]        = useState<Record<string, string[]>>({});
+  const [search, setSearch]                      = useState("");
+  const [properties, setProperties]             = useState<any[]>([]);
+  const [loading, setLoading]                   = useState(true);
+  const [page, setPage]                         = useState(1);
   const [selectedProperty, setSelectedProperty] = useState<any | null>(null);
 
   useEffect(() => {
@@ -649,6 +590,9 @@ const FindPropertyPage = ({ bannerSearch }: { bannerSearch: BannerSearch | null 
       {selectedProperty && (
         <PropertyDetailPanel property={selectedProperty} onClose={() => setSelectedProperty(null)} />
       )}
+
+      {/* Floating chatbot — always mounted, manages its own open/close state */}
+      <PropertyChatbot />
     </div>
   );
 };
